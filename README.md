@@ -9,3 +9,6 @@ CS2102 Project
 
 ### Searching Task:
 >Go to search page and enter keyword and press search button.
+
+### ER diagram:
+![picture](http://url/to/img.png)
