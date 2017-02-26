@@ -7,16 +7,6 @@
 <h1> Demo Todo List </h1>
 </td> </tr>
 
-<?php
-$dbconn = pg_connect("
-    host=127.0.0.1
-    port=8080
-    dbname=tasklist
-    user=postgres
-    password=Yzh1996+
-    ")
-    or die('Could not connect: ' . pg_last_error());
-?>
 
 <tr>
 <td style="background-color:#eeeeee;">
@@ -30,6 +20,7 @@ $dbconn = pg_connect("
 {
     $query = "SELECT task_id, task_name, task_time, task_priority FROM tasks WHERE task_name ILIKE '%".$_GET[Title]."%'";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+        <?php include 'db-connection.php';?>
 
 
     echo "<b>SQL: </b>".$query."<br><br>";

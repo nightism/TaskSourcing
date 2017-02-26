@@ -6,17 +6,7 @@
 <tr> <td colspan="2" style="background-color:#FFA500;">
 <h1> Demo Todo List </h1>
 </td> </tr>
-
-<?php
-$dbconn = pg_connect("
-    host=127.0.0.1
-    port=8080
-    dbname=tasklist
-    user=postgres
-    password=Yzh1996+
-    ")
-    or die('Could not connect: ' . pg_last_error());
-?>
+<?php include 'db-connection.php';?>
 
 <tr>
 <td style="background-color:#eeeeee;">
