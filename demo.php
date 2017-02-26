@@ -20,13 +20,15 @@ $dbconn = pg_connect("
 
 <tr>
 <td style="background-color:#eeeeee;">
+<a href="reset.php">Reset</a>
+<a href="add.php">Add Task</a>
 <form>
         Task Name: <input type="text" name="Title" id="Title">
         <input type="submit" name="formSubmit" value="Search" >
 </form>
 <?php if(isset($_GET['formSubmit'])) 
 {
-    $query = "SELECT task_id, task_name FROM tasks WHERE task_name ILIKE '%".$_GET[Title]."%'";
+    $query = "SELECT task_id, task_name, task_time, task_priority FROM tasks WHERE task_name ILIKE '%".$_GET[Title]."%'";
     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 
@@ -38,12 +40,16 @@ $dbconn = pg_connect("
     <tr>
     <th>Task ID</th>
     <th>Task Name</th>
+    <th>Task Time</th>
+    <th>Task Priority</th>
     </tr>";
 
     while ($row = pg_fetch_row($result)){
       echo "<tr>";
       echo "<td>" . $row[0] . "</td>";
       echo "<td>" . $row[1] . "</td>";
+      echo "<td>" . $row[2] . "</td>";
+      echo "<td>" . $row[3] . "</td>";
       echo "</tr>";
     }
     echo "</table>";
