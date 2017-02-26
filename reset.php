@@ -34,15 +34,15 @@ $dbconn = pg_connect("
         pg_query($dropTableQuery) or die ('Drop table failed: ' . pg_last_error());
         $sqlLog .= $dropTableQuery . "<br>";
     }
-    $createTasksQuery = "CREATE TABLE tasks (task_id SERIAL PRIMARY KEY, task_name varchar(100) NOT NULL, task_priority int NOT NULL)";
+    $createTasksQuery = "CREATE TABLE tasks (task_id SERIAL PRIMARY KEY, task_name varchar(100) NOT NULL, task_priority int NOT NULL, owner_id int NOT NULL)";
     pg_query($createTasksQuery) or die ('Create table tasks failed: ' . pg_last_error());
     $sqlLog .= $createTasksQuery . "<br>";
     $createUsersQuery = "CREATE TABLE users (user_id SERIAL PRIMARY KEY, user_name varchar(100) NOT NULL)";
     pg_query($createUsersQuery) or die ('Create table users failed: ' . pg_last_error());
     $sqlLog .= $createUsersQuery . "<br>";
-    $tasks = array(array('Go to work', '3'), array('Study', '2'), array('Attend meeting', '3'), array('Visit parents', '3'), array('Go surfing', '1'), array('Buy tickets', '3'), array('Go night running', '2'));
+    $tasks = array(array('Go to work', '3', '3'), array('Study', '2', '1'), array('Attend meeting', '3', '1'), array('Visit parents', '3', '0'), array('Go surfing', '1', '2'), array('Buy tickets', '3', '1'), array('Go night running', '2', '0'));
     foreach ($tasks as &$task) {
-        $addTaskQuery = "INSERT INTO tasks (task_name, task_priority) VALUES ('" . $task[0] . "', '" . $task[1] . "')";
+        $addTaskQuery = "INSERT INTO tasks (task_name, task_priority, owner_id) VALUES ('" . $task[0] . "', '" . $task[1] . "', '" . $task[2] . "')";
         pg_query($addTaskQuery) or die('Add task failed: ' . pg_last_error());
         $sqlLog .= $addTaskQuery . "<br>";
     }
