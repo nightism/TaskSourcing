@@ -11,4 +11,4 @@ CS2102 Project
 >Go to search page and enter keyword and press search button.
 
 ### ER diagram:
-![picture](http://url/to/img.png)
+![picture](ER.png)
