@@ -26,29 +26,16 @@ CREATE TABLE categories(
 
 CREATE TABLE tasks (
     task_id int PRIMARY KEY DEFAULT nextval('task_id_seq'),
+    poster_id int REFERENCES users(user_id) 
+        ON DELETE CASCADE NOT NULL,
+    post_time timestamp NOT NULL DEFAULT current_timestamp,
+    picker_id int REFERENCES users(user_id),
     task_name varchar(255) NOT NULL,
     description text,
-    post_time timestamp NOT NULL DEFAULT current_timestamp,
     start_time timestamp,
     end_time timestamp,
     is_active boolean NOT NULL DEFAULT true,
     category_id int REFERENCES categories(category_id)
-);
-
-CREATE TABLE posts (
-    post_id int PRIMARY KEY DEFAULT nextval('post_id_seq'),
-    poster_id int REFERENCES users(user_id)
-        ON DELETE CASCADE NOT NULL,
-    task_id int REFERENCES tasks(task_id)
-        ON DELETE CASCADE NOT NULL
-);
-
-CREATE TABLE task_picks (
-    pick_id int PRIMARY KEY DEFAULT nextval('pick_id_seq'),
-    picker_id int REFERENCES users(user_id) NOT NULL,
-    taker_name varchar(255),
-    task_id int REFERENCES tasks(task_id) 
-        ON DELETE CASCADE NOT NULL
 );
 
 CREATE TABLE biddings (
@@ -74,3 +61,41 @@ INSERT INTO users(user_name, email_address, password) VALUES ('Chen Ke', 'e00127
 INSERT INTO users(user_name, email_address, password) VALUES ('Luo Yuyang', 'e0012652@u.nus.edu', '123456');
 INSERT INTO users(user_name, email_address, password) VALUES ('Duan Yichen', 'e0012639@u.nus.edu', '123456');
 INSERT INTO users(user_name, email_address, password) VALUES ('Xu Ruolan', 'e0012662@u.nus.edu', '123456');
+
+# Categories
+INSERT INTO categories(category_name) VALUES('Web Development');
+INSERT INTO categories(category_name) VALUES('iOS Development');
+INSERT INTO categories(category_name) VALUES('Antroid Development');
+INSERT INTO categories(category_name) VALUES('Full Stack');
+INSERT INTO categories(category_name) VALUES('Graphic Design');
+INSERT INTO categories(category_name) VALUES('Maya');
+INSERT INTO categories(category_name) VALUES('Unreal');
+INSERT INTO categories(category_name) VALUES('Unity');
+INSERT INTO categories(category_name) VALUES('Poster Design');
+INSERT INTO categories(category_name) VALUES('Font Design');
+INSERT INTO categories(category_name) VALUES('Adobe Photoshop');
+INSERT INTO categories(category_name) VALUES('Adobe Illustrator');
+INSERT INTO categories(category_name) VALUES('Adobe AfterEffects');
+
+# Queries examples
+# Post a task
+INSERT INTO tasks(poster_id, task_name, description, category_id) 
+VALUES(0, 'Logo design for cs2102 task sourcing website', 
+    'Design a logo that will be used for a task sourcing website. The logo should look nice and fancy.', 4);
+INSERT INTO tasks(poster_id, task_name, description, start_time, end_time, category_id)
+VALUES(0, 'iOS development for Give For Free',
+    'Give For Free is an website that sells pre-loved goods. Currently we have already got 600+ users and need an iOS version.', 
+    '2017-5-1', '2017-7-31', 1);
+
+# List all tasks
+SELECT u.user_name, task.task_name, c.category_name
+    FROM users u
+    INNER JOIN tasks task ON u.user_id = task.poster_id
+    INNER JOIN categories c ON task.category_id = c.category_id;
+
+# List all tasks except for some people's task
+SELECT u.user_name, task.task_name, c.category_name
+    FROM users u
+    INNER JOIN tasks task ON u.user_id = task.poster_id
+    INNER JOIN categories c ON task.category_id = c.category_id
+    WHERE u.user_id <> 0;
