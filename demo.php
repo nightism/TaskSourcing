@@ -25,7 +25,7 @@
         <tr> <td colspan="2" style="background-color:#FFA500;">
         <h1> Demo Todo List </h1>
         </td> </tr>
-        <?php include 'db-connection.php';?>
+        <?php include '/config/db-connection.php';?>
 
         <tr>
             <td style="background-color:#eeeeee;">

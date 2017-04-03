@@ -88,7 +88,7 @@ VALUES(0, 'iOS development for Give For Free',
     '2017-5-1', '2017-7-31', 1);
 
 # List all tasks
-SELECT u.user_name, task.task_name, c.category_name
+SELECT u.user_name, task.task_name, task.post_time, c.category_name
     FROM users u
     INNER JOIN tasks task ON u.user_id = task.poster_id
     INNER JOIN categories c ON task.category_id = c.category_id;
@@ -99,3 +99,10 @@ SELECT u.user_name, task.task_name, c.category_name
     INNER JOIN tasks task ON u.user_id = task.poster_id
     INNER JOIN categories c ON task.category_id = c.category_id
     WHERE u.user_id <> 0;
+
+# List all tasks from a specific user
+SELECT task.task_name, c.category_name, task.post_time
+    FROM users u
+    INNER JOIN tasks task ON u.user_id = task.poster_id
+    INNER JOIN categories c ON task.category_id = c.category_id
+    WHERE u.user_id = 0;
