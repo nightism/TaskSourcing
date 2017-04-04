@@ -1,4 +1,7 @@
 /bootstrap
+/css/bootstrap-datetimepicker.min.css
 /db-connection.php
 /js/jquery-3.2.0.min.js
+/js/bootstrap-datetimepicker.min.js
+/js/jquery.ns-autogrow.min.js
 /config/db-connection.php
