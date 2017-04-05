@@ -59,9 +59,9 @@
                         </form>
 
                         <?php if(isset($_GET['login'])) {
-                            $query = "SELECT u.user_id, u.user_name
+                            $query = "SELECT u.id, u.name
                                       FROM users u
-                                      WHERE u.email_address = '".$_GET['email']."'
+                                      WHERE u.email = '".$_GET['email']."'
                                         AND u.password = '".$_GET[password]."';";
                             $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
