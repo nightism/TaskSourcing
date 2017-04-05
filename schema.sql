@@ -80,42 +80,44 @@ CREATE TABLE payments (
         ON DELETE CASCADE
 );
 
--- # Default data
--- # Regions
--- INSERT INTO regions(name) VALUES ('');
--- INSERT INTO regions(name) VALUES ('');
+# Default data
+# Regions
+INSERT INTO regions(name) VALUES ('Clementi');
+INSERT INTO regions(name) VALUES ('Tampines');
+INSERT INTO regions(name) VALUES ('Queens Town');
+INSERT INTO regions(name) VALUES ('Holland Village');
+INSERT INTO regions(name) VALUES ('Changi');
 
+# Admins
+INSERT INTO users(name, email, password, is_admin, region) VALUES ('Yang Zhuohan', 'billstark1996@gmail.com', '123456', true, 0);
+INSERT INTO users(name, email, password, is_admin, region) VALUES ('Sun Mingyang', 'sun.mingyang@u.nus.edu', '123456', true, 0);
+INSERT INTO users(name, email, password, is_admin, region) VALUES ('Wu Zefeng', 'flamesdesperado@gmail.com', '123456', true, 0);
+INSERT INTO users(name, email, password, is_admin, region) VALUES ('Li Zihan', 'e0012710@u.nus.edu', '123456', true, 0);
+INSERT INTO users(name, email, password, is_admin, region) VALUES ('Deng Yue', 'dengyue@yyy.com', '123456', true, 0);
 
--- # Admins
--- INSERT INTO users(name, email, password, is_admin) VALUES ('Yang Zhuohan', 'billstark1996@gmail.com', '123456', true);
--- INSERT INTO users(name, email, password, is_admin) VALUES ('Sun Mingyang', 'sun.mingyang@u.nus.edu', '123456', true);
--- INSERT INTO users(name, email, password, is_admin) VALUES ('Wu Zefeng', 'flamesdesperado@gmail.com', '123456', true);
--- INSERT INTO users(name, email, password, is_admin) VALUES ('Li Zihan', 'e0012710@u.nus.edu', '123456', true);
--- INSERT INTO users(name, email, password, is_admin) VALUES ('Deng Yue', 'something', '123456', true);
+# Users
+INSERT INTO users(name, email, password, region) VALUES ('Jiang Haotian', 'e0012663@u.nus.edu', '123456', 0);
+INSERT INTO users(name, email, password, region) VALUES ('Wu Hanqing', 'e0012689@u.nus.edu', '123456', 1);
+INSERT INTO users(name, email, password, region) VALUES ('Chen Ke', 'e0012717@u.nus.edu', '123456', 1);
+INSERT INTO users(name, email, password, region) VALUES ('Luo Yuyang', 'e0012652@u.nus.edu', '123456', 2);
+INSERT INTO users(name, email, password, region) VALUES ('Duan Yichen', 'e0012639@u.nus.edu', '123456', 0);
+INSERT INTO users(name, email, password, region) VALUES ('Xu Ruolan', 'e0012662@u.nus.edu', '123456', 4);
 
--- # Users
--- INSERT INTO users(name, email, password) VALUES ('Jiang Haotian', 'e0012663@u.nus.edu', '123456');
--- INSERT INTO users(name, email, password) VALUES ('Wu Hanqing', 'e0012689@u.nus.edu', '123456');
--- INSERT INTO users(name, email, password) VALUES ('Chen Ke', 'e0012717@u.nus.edu', '123456');
--- INSERT INTO users(name, email, password) VALUES ('Luo Yuyang', 'e0012652@u.nus.edu', '123456');
--- INSERT INTO users(name, email, password) VALUES ('Duan Yichen', 'e0012639@u.nus.edu', '123456');
--- INSERT INTO users(name, email, password) VALUES ('Xu Ruolan', 'e0012662@u.nus.edu', '123456');
-
--- # Categories
--- INSERT INTO categories(name) VALUES('Dusting');
--- INSERT INTO categories(name) VALUES('Sweeping');
--- INSERT INTO categories(name) VALUES('Laundry');
--- INSERT INTO categories(name) VALUES('Delivering');
--- INSERT INTO categories(name) VALUES('Car maintaining');
--- INSERT INTO categories(name) VALUES('Kitchen cleaning');
--- INSERT INTO categories(name) VALUES('Bathroom cleaning');
--- INSERT INTO categories(name) VALUES('Pet caring');
--- INSERT INTO categories(name) VALUES('Plant caring');
--- INSERT INTO categories(name) VALUES('Babysisting');
--- INSERT INTO categories(name) VALUES('Meal preparing');
--- INSERT INTO categories(name) VALUES('Translating');
--- INSERT INTO categories(name) VALUES('Tuor guiding');
--- INSERT INTO categories(name) VALUES('Teaching');
+# Categories
+INSERT INTO categories(name) VALUES('Dusting');
+INSERT INTO categories(name) VALUES('Sweeping');
+INSERT INTO categories(name) VALUES('Laundry');
+INSERT INTO categories(name) VALUES('Delivering');
+INSERT INTO categories(name) VALUES('Car maintaining');
+INSERT INTO categories(name) VALUES('Kitchen cleaning');
+INSERT INTO categories(name) VALUES('Bathroom cleaning');
+INSERT INTO categories(name) VALUES('Pet caring');
+INSERT INTO categories(name) VALUES('Plant caring');
+INSERT INTO categories(name) VALUES('Babysisting');
+INSERT INTO categories(name) VALUES('Meal preparing');
+INSERT INTO categories(name) VALUES('Translating');
+INSERT INTO categories(name) VALUES('Tuor guiding');
+INSERT INTO categories(name) VALUES('Teaching');
 
 
 -- # Queries examples
