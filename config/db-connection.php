@@ -4,7 +4,7 @@ $dbconn = pg_connect("
     port=5432
     dbname=task_sourcing
     user=postgres
-    password=smySMY2017
+    password=Wzf19970822!!!
     ")
     or die('Could not connect: ' . pg_last_error());
 ?>
