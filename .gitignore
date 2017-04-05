@@ -3,4 +3,5 @@
 /js/jquery-3.2.0.min.js
 /js/bootstrap-datetimepicker.min.js
 /js/jquery.ns-autogrow.min.js
+/config
 /config/db-connection.php

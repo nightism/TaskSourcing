@@ -1,10 +1,10 @@
 <?php
 $dbconn = pg_connect("
     host=127.0.0.1
-    port=8080
+    port=5432
     dbname=task_sourcing
     user=postgres
-    password=Yzh1996+
+    password=smySMY2017
     ")
     or die('Could not connect: ' . pg_last_error());
 ?>
