@@ -23,6 +23,14 @@ if (isset($_SESSION["user_id"])) {
 	<!-- include php -->
     <?php include "config/db-connection.php"; ?>
 
-
+    <?php
+    	$query = "SELECT t.title, t.id FROM tasks t;";
+    	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+    	$table_content = "<table>";
+    	while ($row = pg_fetch_row($result)) {
+    		$table_content .= "<tr><td>" . $row[0] . "</td></tr>";
+    	}
+    	echo $table_content . "</table>";
+    ?>
 </body>
 </html>
