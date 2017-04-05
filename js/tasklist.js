@@ -1,3 +1,5 @@
 $('.taskLink').on('click', function () {
-	$.get("task.php", {"task_id": $(this).attr('tid')})
+	$('#task_id').val($(this).attr('tid'))
+	$('#viewTask').submit()
+	console.log("456")
 })

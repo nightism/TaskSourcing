@@ -23,6 +23,13 @@ if (isset($_SESSION["user_id"])) {
 	<!-- include php -->
     <?php include "config/db-connection.php"; ?>
 
-
+    <?php
+    	if (isset($_GET["task_id"])) {
+    		$task_id = $_GET["task_id"];
+    		echo $task_id . " " . $user_id;
+    	} else {
+    		echo "nothing";
+    	}
+    ?>
 </body>
 </html>
