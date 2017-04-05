@@ -1,3 +1,7 @@
+<?php
+// Start the session
+session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +20,7 @@
     <div class="main-container">
         <div class="container">
             <div class="wrapper">
-                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-8 panel panel-default login-panel">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-8 panel panel-default ogin-panel">
 
                     <!-- heading -->
                     <div class="panel-title login-panelheading">
@@ -67,7 +71,9 @@
 
                             $row = pg_fetch_row($result);
                             if ($row) {
-                                echo "login success";
+                                $_SESSION["user_id"] = $row[0];
+                                header("Location: tasklist.php");
+                                exit;
                             } else {
                                 echo "Incorrect email or password";
                             }
