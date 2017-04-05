@@ -101,7 +101,18 @@ INSERT INTO users(name, email, password, region) VALUES ('Wu Hanqing', 'e0012689
 INSERT INTO users(name, email, password, region) VALUES ('Chen Ke', 'e0012717@u.nus.edu', '123456', 1);
 INSERT INTO users(name, email, password, region) VALUES ('Luo Yuyang', 'e0012652@u.nus.edu', '123456', 2);
 INSERT INTO users(name, email, password, region) VALUES ('Duan Yichen', 'e0012639@u.nus.edu', '123456', 0);
-INSERT INTO users(name, email, password, region) VALUES ('Xu Ruolan', 'e0012662@u.nus.edu', '123456', 4);
+
+# Credit cards
+INSERT INTO credit_cards(card_number, owner) VALUES ('1217528338469765', 0);
+INSERT INTO credit_cards(card_number, owner) VALUES ('9907232816517776', 1);
+INSERT INTO credit_cards(card_number, owner) VALUES ('2384753088271560', 2);
+INSERT INTO credit_cards(card_number, owner) VALUES ('8261890571873179', 3);
+INSERT INTO credit_cards(card_number, owner) VALUES ('0159338814002797', 4);
+INSERT INTO credit_cards(card_number, owner) VALUES ('2953670727111960', 5);
+INSERT INTO credit_cards(card_number, owner) VALUES ('4025347713735174', 6);
+INSERT INTO credit_cards(card_number, owner) VALUES ('4007339852045690', 7);
+INSERT INTO credit_cards(card_number, owner) VALUES ('7930161340703607', 8);
+INSERT INTO credit_cards(card_number, owner) VALUES ('7930161340703607', 9);
 
 # Categories
 INSERT INTO categories(name) VALUES('Dusting');
@@ -120,12 +131,12 @@ INSERT INTO categories(name) VALUES('Tuor guiding');
 INSERT INTO categories(name) VALUES('Teaching');
 
 
--- # Queries examples
--- # Post a task
--- INSERT INTO tasks(onwer, title, description, category_id) 
+-- # Queries example
+# Post a task
+-- INSERT INTO tasks(owner, title, description, category_id) 
 -- VALUES(0, 'wash 200 dishes', 
 --     'wash 200 dishes in my house.', 4);
--- INSERT INTO tasks(onwer, title, description, start_time, end_time, category_id)
+-- INSERT INTO tasks(owner, title, description, start_time, end_time, category_id)
 -- VALUES(0, 'iOS development for Give For Free',
 --     'Give For Free is an website that sells pre-loved goods. Currently we have already got 600+ users and need an iOS version.', 
 --     '2017-5-1', '2017-7-31', 1);
@@ -133,19 +144,19 @@ INSERT INTO categories(name) VALUES('Teaching');
 -- # List all tasks
 -- SELECT u.name, task.name, task.post_time, c.name
 --     FROM users u
---     INNER JOIN tasks task ON u.id = task.onwer
+--     INNER JOIN tasks task ON u.id = task.owner
 --     INNER JOIN categories c ON task.category = c.category
 
 -- # List all tasks except for some people's task
 -- SELECT u.name, task.name, c.name
 --     FROM users u
---     INNER JOIN tasks task ON u.id = task.onwer
+--     INNER JOIN tasks task ON u.id = task.owner
 --     INNER JOIN categories c ON task.category = c.category
 --     WHERE u.id <> 0;
 
 -- # List all tasks from a specific user
 -- SELECT task.name, c.name, task.post_time
 --     FROM users u
---     INNER JOIN tasks task ON u.id = task.onwer
+--     INNER JOIN tasks task ON u.id = task.owner
 --     INNER JOIN categories c ON task.category = c.category
 --     WHERE u.id = 0;
