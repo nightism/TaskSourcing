@@ -16,7 +16,7 @@
     <div class="main-container">
         <div class="container">
             <div class="wrapper">
-                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-8 panel panel-default ogin-panel">
+                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-8 panel panel-default login-panel">
 
                     <!-- heading -->
                     <div class="panel-title login-panelheading">
