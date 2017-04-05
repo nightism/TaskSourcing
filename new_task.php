@@ -80,7 +80,7 @@
                                 <select name="category" class="form-control">
                                     <option value="">Select Category</option>
                                     <?php
-                                        $query = "SELECT c.category_name FROM categories c ORDER BY c.category_name";
+                                        $query = "SELECT c.name FROM categories c ORDER BY c.name";
                                         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
                                         while ($row = pg_fetch_row($result)){
