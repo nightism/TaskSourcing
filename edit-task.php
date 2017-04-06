@@ -152,9 +152,7 @@ if (isset($_SESSION["user_id"])) {
                         <div class="form-group row">
                             <label class="col-sm-3 control-label">Description</label>
                             <div class="col-sm-6">
-                                <textarea name="description" class="form-control autosize" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 56px;" >
-                                    <?php echo trim($desc); ?>
-                                </textarea>
+                                <textarea name="description" class="form-control autosize" style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 56px;" ><?php echo trim($desc); ?></textarea>
                             </div>
                         </div>
                         
