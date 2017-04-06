@@ -64,6 +64,23 @@ if (isset($_SESSION["user_id"])) {
     <nav class="navbar navbar-inverse navigation-bar navbar-fixed-top">
         <div class="container navbar-container">
             <div class="navbar-header pull-left"><a class="navbar-brand" href="">Tasource</a></div>
+            <div class="nav navbar-nav navbar-form">
+                <div class="input-icon">
+                    <i class="glyphicon glyphicon-search search"></i>
+                    <input type="text" placeholder="Type to search..." class="form-control search-form" tabindex="1">
+                </div>
+            </div>
+            <div class="collapse navbar-collapse pull-right">
+                <ul class="nav navbar-nav">
+                    <li><a href="tasklist.php">Find task</a></li>
+                    <li><a href="new_task.php">Post task</a></li>
+                    <?php 
+                    if($is_admin == "t") {
+                        echo "<li><a href='dashboard.php'>Dashboard</a></li>";
+                    }
+                    ?>
+                </ul>
+            </div>
         </div>
     </nav>
 
