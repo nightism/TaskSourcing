@@ -62,16 +62,33 @@ if (isset($_SESSION["user_id"])) {
     ?>
 
     <?php
-        $query = "SELECT task, assignee FROM assignments WHERE task=" . $task_id . ";";
+        $query = "SELECT task, assignee, is_done FROM assignments WHERE task=" . $task_id . ";";
         $result = pg_query($query) or die('Query failed: ' . pg_last_error());
         if ($row = pg_fetch_row($result)) {
+            pg_free_result($result);
+            if ($owner_id == $user_id || $row[1] == $user_id) {
+                if (trim($row[2]) == "t") {
+                    $query = "SELECT * FROM payments WHERE task=" . $task_id ."";
+                    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+                    $payment_info = pg_fetch_row($result);
+                    $payment = "The payment has been made<br>Details: ";
+                    $payment .= "Receipt: " . $payment_info[0] . "<br>Card number: " . $payment_info[3]; 
+
+                    pg_free_result($result);
+
+                } else {
+                    $payment = "The payment haven't been made<br>";
+                    $payment .= "<form class='form-inline' action='make_payment.php' method='get'><div class='form-group' style='float: left;'><input type='submit' class='form-control' value='Task is finished and Make Payment'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form><br><br>";
+                }
+            }
+            
             $bidders = "<p>This task is assigned to: ";
             $query = "SELECT u.name, u.id FROM users u WHERE u.id = " . $row[1] . ";";
-            pg_free_result($result);
             $result = pg_query($query) or die('Query failed: ' . pg_last_error());
             $assignee_info = pg_fetch_row($result);
             $bidders = $bidders . $assignee_info[0] . "</p>";
             pg_free_result($result);
+
         } else {
             pg_free_result($result);
             $query = "SELECT u.name, u.id FROM users u INNER JOIN biddings b on u.id = b.bidder WHERE b.task = " . $task_id . ";";
@@ -79,7 +96,7 @@ if (isset($_SESSION["user_id"])) {
             $bidders = "";
             while ($row = pg_fetch_row($result)) {
                 if ($owner_id == $user_id) {
-                    $bidders = "<p>test0</p>" . $bidders . "<p>" . $row[0] . "</p><form class='form-inline' action='assignTask.php' method='get'><div class='form-group' style='float: left;'><input type='submit' class='form-control' value='Assign'></div><input type='hidden' name='task_id' value='" . $task_id . "'><input type='hidden' name='assignee' value='" . $row[1] . "'></form>";
+                    $bidders .=  $row[0] . "<br><form class='form-inline' action='assignTask.php' method='get'><div class='form-group' style='float: left;'><input type='submit' class='form-control' value='Assign'></div><input type='hidden' name='task_id' value='" . $task_id . "'><input type='hidden' name='assignee' value='" . $row[1] . "'></form>";
                 } else {
                     $bidders = $bidders . "<p>" . $row[0] . "</p>";
                 }
@@ -108,6 +125,7 @@ if (isset($_SESSION["user_id"])) {
 			</div>
             <div class="panel-body">
                 <h4>Bidders: </h4>
+                <p><?php echo $payment; ?></p>
                 <p><?php echo $bidders;?></p>
             </div>
 			<div class="panel-footer">
