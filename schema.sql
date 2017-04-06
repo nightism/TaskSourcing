@@ -80,7 +80,59 @@ CREATE TABLE payments (
         ON DELETE CASCADE
 );
 
+ALTER TABLE taks ADD total_salary INTEGER;
+
 #Trigger and Functions 
+-- DROP FUNCTION calculateTotalSlaray() CASCADE;
+
+CREATE OR REPLACE FUNCTION calculateTotalSalary(taskNum INTEGER)
+RETURNS INTEGER AS $$
+DECLARE totalSalary INTEGER; days DOUBLE PRECISION; hours DOUBLE PRECISION; mins DOUBLE PRECISION;
+startTime timestamp; endTime timestamp; mountPerHour INTEGER;
+BEGIN
+SELECT start_time, end_time, salary INTO startTime, endTime, mountPerHour FROM tasks WHERE id = taskNum;
+mins = extract(MINUTE FROM (endTime - startTime));
+days = extract(DAY FROM (endTime - startTime));
+hours = extract(HOUR FROM (endTime - startTime)) + days * 24;
+IF mins > 0 THEN hours = hours + 1;
+ELSE END IF;
+totalSalary = hours * mountPerHour;
+RETURN totalSalary;
+END; $$
+LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION addTaskTotalSalary()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE tasks
+    SET total_salary = calculateTotalSalary(new.id)
+    WHERE id = new.id;
+    RETURN NULL;
+END; $$
+LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION updateTaskTotalSalary()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE tasks
+    SET total_salary = calculateTotalSalary(new.id)
+    WHERE id = new.id;
+    RETURN NULL;
+END; $$
+LANGUAGE PLPGSQL;
+
+CREATE TRIGGER addTask
+AFTER INSERT
+ON tasks
+FOR EACH ROW
+EXECUTE PROCEDURE addTaskTotalSalary();
+
+CREATE TRIGGER updateTask
+AFTER UPDATE of salary
+ON tasks
+FOR EACH ROW
+EXECUTE PROCEDURE updateTaskTotalSalary();
+
 
 # Default data
 # Regions
