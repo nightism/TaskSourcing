@@ -46,9 +46,13 @@ if (isset($_SESSION["user_id"])) {
             </div>
             <div class="collapse navbar-collapse pull-right">
                 <ul class="nav navbar-nav">
-                    <li><a href="">Find task</a></li>
-                    <li><a href="">Post task</a></li>
-                    <li><a href="">Profile</a></li>
+                    <li><a href="/TaskSourcing/tasklist.php">View task</a></li>
+                    <li><a href="/TaskSourcing/new_task.php">Post task</a></li>
+                    <?php 
+                        if ($_SESSION['is_admin'] == "t") {
+                            echo "<li><a href='/TaskSourcing/dashboard.php'>Dashboard</a></li>";
+                        }
+                    ?>
                 </ul>
             </div>
         </div>
