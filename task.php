@@ -23,6 +23,26 @@ if (isset($_SESSION["user_id"])) {
 	<!-- include php -->
     <?php include "config/db-connection.php"; ?>
 
+    <!-- navigation bar -->
+    <nav class="navbar navbar-inverse navigation-bar navbar-fixed-top">
+        <div class="container navbar-container">
+            <div class="navbar-header pull-left"><a class="navbar-brand" href="">Tasource</a></div>
+            <div class="nav navbar-nav navbar-form">
+                <div class="input-icon">
+                    <i class="glyphicon glyphicon-search search"></i>
+                    <input type="text" placeholder="Type to search..." class="form-control search-form" tabindex="1">
+                </div>
+            </div>
+            <div class="collapse navbar-collapse pull-right">
+                <ul class="nav navbar-nav">
+                    <li><a href="">View task</a></li>
+                    <li><a href="">Post task</a></li>
+                    <li><a href="">Profile</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <?php
     	if (isset($_GET["task_id"])) {
     		$task_id = $_GET["task_id"];
@@ -105,38 +125,52 @@ if (isset($_SESSION["user_id"])) {
         }
 
     ?>
-    <br>
-	<div class="container">
-		<div class="panel panel-info">
-			<div class="panel-heading"><h3><?php echo $title;?></h3></div>
-			<div class="panel-body">
-				<h4>Description: </h4><br>
-				<p><?php echo $desc;?></p><br>
-				<h5>Category:</h5>
-				<p><?php echo $category;?></p>
-				<h5>Region:</h5>
-				<p><?php echo $region;?></p>
-				<h5>Start Time:</h5>
-				<p><?php echo $start_time;?></p>
-				<h5>End Time:</h5>
-				<p><?php echo $end_time;?></p>
-				<h5>Salary:</h5>
-				<p><?php echo $salary;?></p>
-			</div>
-            <div class="panel-body">
-                <h4>Bidders: </h4>
-                <p><?php echo $payment; ?></p>
-                <p><?php echo $bidders;?></p>
-            </div>
-			<div class="panel-footer">
-				<div class="row">
-		            <div class="col-md-6"><strong>Posted on </strong><?php echo $post_time;?></div>
-		            <div class="col-md-6">
-		            	<?php echo $bidForm; ?>
-	            	</div>
-		        </div>
-			</div>
-		</div>
-	</div>
+
+    <!-- content -->
+    <div class="content-container container">
+
+        <!-- page heading -->
+        <div class="page-heading">
+            <ol class="breadcrumb">
+                <li><a href="tasklist.php">Home</a></li>
+                <li>Task detail</li>
+            </ol>
+            <h1>Task Detail</h1>
+        </div>
+
+        <br>
+    	<div class="container">
+    		<div class="panel panel-info">
+    			<div class="panel-heading"><h3><?php echo $title;?></h3></div>
+    			<div class="panel-body">
+    				<h4>Description: </h4><br>
+    				<p><?php echo $desc;?></p><br>
+    				<h5>Category:</h5>
+    				<p><?php echo $category;?></p>
+    				<h5>Region:</h5>
+    				<p><?php echo $region;?></p>
+    				<h5>Start Time:</h5>
+    				<p><?php echo $start_time;?></p>
+    				<h5>End Time:</h5>
+    				<p><?php echo $end_time;?></p>
+    				<h5>Salary:</h5>
+    				<p><?php echo $salary;?></p>
+    			</div>
+                <div class="panel-body">
+                    <h4>Bidders: </h4>
+                    <p><?php echo $payment; ?></p>
+                    <p><?php echo $bidders;?></p>
+                </div>
+    			<div class="panel-footer">
+    				<div class="row">
+    		            <div class="col-md-6"><strong>Posted on </strong><?php echo $post_time;?></div>
+    		            <div class="col-md-6">
+    		            	<?php echo $bidForm; ?>
+    	            	</div>
+    		        </div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
 </body>
 </html>
