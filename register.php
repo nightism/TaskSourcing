@@ -108,14 +108,21 @@ session_start();
                         $email = pg_escape_string($_POST['email']); 
                         $password = pg_escape_string($_POST['password']); 
                         $region = pg_escape_string($_POST['region']); 
+                        $card = pg_escape_string($_POST['card']); 
 
-                        $query = "INSERT INTO users (name, email, password, is_admin) VALUES ('" . $name . "', '" . $email . "', '" . $password . "', '0')";
+                        $query = "INSERT INTO users (name, email, password, is_admin, region) VALUES ('" . $name . "', '" . $email . "', '" . $password . "', '0',  (SELECT r.id FROM regions r WHERE r.name = '" . $region . "'));";
+                        $query .= "INSERT INTO credit_cards (card_number, owner) 
+                                    VALUES ('" . $card . "', 
+                                        (SELECT u.id
+                                         FROM users u
+                                         WHERE u.email = '" . $email . "'));";
                         $result = pg_query($query) or die('Add user failed: ' . pg_last_error());
 
                         if ($result) {
                                 $_SESSION["user_id"] = $row[0];
-                                echo "<script>window.location = '/TaskSourcing/tasklist.php';</script>";
                                 echo "Sign up successfully!";
+                                sleep(1);
+                                echo "<script>window.location = '/TaskSourcing/tasklist.php';</script>";
                                 exit;
                             } else {
                                 echo "Incorrect information";
