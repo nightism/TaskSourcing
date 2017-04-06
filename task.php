@@ -60,6 +60,23 @@ if (isset($_SESSION["user_id"])) {
     		header("Location: tasklist.php");
     	}
     ?>
+
+    <?php
+        if (isset($_GET["task_id"])) {
+            $task_id = $_GET["task_id"];
+            $query = "SELECT u.name FROM users u INNER JOIN biddings b on u.id = b.bidder WHERE b.task = " . $task_id . ";";
+            $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+            $bidders = "";
+            while ($row = pg_fetch_row($result)) {
+                $bidders = $bidders . "<p>" . $row[0] . "</p>";
+            }
+
+        } else {
+            header("Location: tasklist.php");
+        }
+
+
+    ?>
     <br>
 	<div class="container">
 		<div class="panel panel-info">
@@ -78,6 +95,10 @@ if (isset($_SESSION["user_id"])) {
 				<h5>Salary:</h5>
 				<p><?php echo $salary;?></p>
 			</div>
+            <div class="panel-body">
+                <h4>Bidders: </h4>
+                <p><?php echo $bidders;?></p>
+            </div>
 			<div class="panel-footer">
 				<div class="row">
 		            <div class="col-md-6"><strong>Posted on </strong><?php echo $post_time;?></div>
@@ -88,6 +109,5 @@ if (isset($_SESSION["user_id"])) {
 			</div>
 		</div>
 	</div>
-
 </body>
 </html>
