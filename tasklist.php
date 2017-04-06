@@ -24,7 +24,9 @@ if (isset($_SESSION["user_id"])) {
 </head>
 <body>
     <!-- include php -->
-    <?php include "config/db-connection.php"; ?>
+    <?php 
+    include "config/db-connection.php";
+    ?>
 
     <!-- navigation bar -->
     <nav class="navbar navbar-inverse navigation-bar navbar-fixed-top">
@@ -63,7 +65,7 @@ if (isset($_SESSION["user_id"])) {
 
             <!-- panel -->
             <div class="panel new-task-panel">
-                <form action="">
+                <form action="" id="findForm">
                     <!-- panel heading -->
                     <div class="panel-heading">
                         <h2 class="new-task-form-title">View Tasks</h2>
@@ -226,6 +228,9 @@ if (isset($_SESSION["user_id"])) {
                                 $query .= " ORDER BY t.title ";
 
                                 // echo $query;
+                                $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+                            } else {
+                                $query = "SELECT t.title, t.description, t.start_time, t.end_time, c.name, r.name, t.salary FROM tasks t INNER JOIN categories c ON t.category = c.id INNER JOIN regions r ON t.region = r.id";
                                 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                             }
                         ?>

@@ -4,5 +4,3 @@ $(function() {
     $('#start-datetimepicker').datetimepicker();
     $('#end-datetimepicker').datetimepicker();
 });
-
-$("#findBtn").click()
