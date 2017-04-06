@@ -3,6 +3,7 @@
 session_start();
 if (isset($_SESSION["user_id"])) {
     $user_id = $_SESSION["user_id"];
+    $is_admin = $_SESSION["is_admin"];
 } else {
     header("Location: login.php");
     exit;
@@ -45,7 +46,7 @@ if (isset($_SESSION["user_id"])) {
                 $category = pg_fetch_row(pg_query("SELECT name FROM categories WHERE id = " . $row[8] . ";"))[0];
                 $region = pg_fetch_row(pg_query("SELECT name FROM regions WHERE id = " . $row[9] . ";"))[0];
                 $salary = $row[10];
-                if ($owner_id == $user_id) {
+                if ($owner_id == $user_id || $is_admin == "t") {
 
                 } else {
                     header("Location: tasklist.php");
@@ -197,8 +198,9 @@ if (isset($_SESSION["user_id"])) {
                             <div class="row">
                                 <div class="col-sm-6 col-sm-offset-3">
                                     <div class="btn-toolbar">
-                                        <button type="submit" name="edit" class="btn-primary btn">Edit</button>
-                                        <button class="btn-default btn" onclick="window.location.href='tasklist.php'">Cancel</button>
+                                        <button class="btn-primary btn" type="submit" name="edit">Edit</button>
+                                        <button class="btn-default btn" type="button" onclick="window.location.href='tasklist.php'">Cancel</button>
+                                        <button class="btn-danger btn" type="submit" name="delete">Delete</button>
                                     </div>
                                 </div>
                             </div>
@@ -225,7 +227,16 @@ if (isset($_SESSION["user_id"])) {
                         header("Location: tasklist.php");
                         echo "<script>window.location = '/TaskSourcing/tasklist.php';</script>";
                         exit();
-                    }
+                    } 
+                    // else if(isset($_GET['delete']) {
+                    //     $task_id = $_GET['t_id'];
+                    //     $query = "DELETE FROM tasks WHERE id=" . $task_id . ";";
+                    //     $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+                    //     pg_free_result($result);
+                    //     header("Location: tasklist.php");
+                    //     echo "<script>window.location = '/TaskSourcing/tasklist.php';</script>";
+                    //     exit();
+                    // }
                 ?>
             </div>
         </div>
