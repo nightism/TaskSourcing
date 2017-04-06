@@ -158,15 +158,19 @@ if (isset($_SESSION["user_id"])) {
                         <!-- task salary range -->
                         <div class="row">
                             <div class="col-md-6">
-                                <label class="col-sm-3 control-label">Salary Lowerbound</label>
-                                <div class="col-sm-6">
-                                <input type="number" class="form-control" name="lowerbound">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 control-label">Salary Lowerbound</label>
+                                        <div class="col-sm-6">
+                                            <input type="number" class="form-control" name="lowerbound">
+                                        </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="col-sm-3 control-label">Salary Upperbound</label>
-                                <div class="col-sm-6">
-                                <input type="number" class="form-control" name="upperbound">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 control-label">Salary Upperbound</label>
+                                        <div class="col-sm-6">
+                                            <input type="number" class="form-control" name="upperbound">
+                                        </div>
                                 </div>
                             </div>
                         </div>
