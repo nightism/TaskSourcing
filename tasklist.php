@@ -54,7 +54,7 @@ if (isset($_SESSION["user_id"])) {
         <!-- page heading -->
         <div class="page-heading">
             <ol class="breadcrumb">
-                <li><a href="/">Home</a></li>
+                <li><a href="tasklist.php">Home</a></li>
                 <li>View task</li>
             </ol>
             <h1>View Tasks</h1>
@@ -193,7 +193,7 @@ if (isset($_SESSION["user_id"])) {
                                 $lowerbound = $_GET['lowerbound'];
                                 $upperbound = $_GET['upperbound'];
 
-                                $query = "SELECT t.title, t.description, t.start_time, t.end_time, c.name, r.name, t.salary
+                                $query = "SELECT t.title, t.description, t.start_time, t.end_time, c.name, r.name, t.salary, t.id
                                           FROM tasks t INNER JOIN categories c ON t.category = c.id INNER JOIN regions r ON t.region = r.id
                                           WHERE 1 = 1 ";
 
@@ -230,7 +230,7 @@ if (isset($_SESSION["user_id"])) {
                                 // echo $query;
                                 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                             } else {
-                                $query = "SELECT t.title, t.description, t.start_time, t.end_time, c.name, r.name, t.salary FROM tasks t INNER JOIN categories c ON t.category = c.id INNER JOIN regions r ON t.region = r.id";
+                                $query = "SELECT t.title, t.description, t.start_time, t.end_time, c.name, r.name, t.salary, t.id FROM tasks t INNER JOIN categories c ON t.category = c.id INNER JOIN regions r ON t.region = r.id";
                                 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                             }
                         ?>
@@ -247,7 +247,7 @@ if (isset($_SESSION["user_id"])) {
                             </tr>
                             <?php
                                 while ($row = pg_fetch_row($result)){
-                                    echo "<tr>";
+                                    echo "<tr class='taskLink' tid='" . $row[7] . "' onclick='viewTask(this)' style='cursor: pointer;'>";
                                     echo "<td>" . $row[0] . "</td>";
                                     echo "<td>" . $row[1] . "</td>";
                                     echo "<td>" . $row[2] . "</td>";
@@ -264,6 +264,7 @@ if (isset($_SESSION["user_id"])) {
                     </div>
 
                 </form>
+                <form action='task.php' id='viewTask'><input id='task_id' type='hidden' name='task_id'></form>
             </div>
         </div>
     </div>
