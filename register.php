@@ -113,8 +113,9 @@ session_start();
                         $result = pg_query($query) or die('Add user failed: ' . pg_last_error());
 
                         if ($result) {
-                                $_SESSION["user_id"] = $row[1];
-                                header("Location: login.php");
+                                $_SESSION["user_id"] = $row[0];
+                                echo "<script>window.location = '/TaskSourcing/tasklist.php';</script>";
+                                echo "Sign up successfully!";
                                 exit;
                             } else {
                                 echo "Incorrect information";
