@@ -7,6 +7,11 @@ if (isset($_SESSION["user_id"])) {
 	header("Location: login.php");
     exit;
 }
+if (isset($_SESSION["is_admin"])) {
+    $is_admin = $_SESSION["is_admin"];
+} else {
+    $is_admin = 'f';
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -46,10 +51,14 @@ if (isset($_SESSION["user_id"])) {
                 } else {
                     $biddingCheckQuery = "SELECT * FROM biddings b WHERE b.bidder = " . $user_id . " AND b.task = "  . $task_id . ";";
                     $biddingCheckResult = pg_query($biddingCheckQuery) or die('Query failed: ' . pg_last_error());
+                    $adminSpecial = "";
+                    if ($is_admin == 't') {
+                        $adminSpecial = "<form class='form-inline' action='edit-task.php' method='get'><div class='form-group' style='float: right;'><input type='submit' class='form-control' value='Edit'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>";
+                    }
                     if (pg_fetch_row($biddingCheckResult)) {
-                        $bidForm = "<form class='form-inline' action='cancelBid.php' method='get'><div class='form-group' style='float: right;'><input type='submit' class='form-control' value='Cancel Bidding'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>";
+                        $bidForm = "<form class='form-inline' action='cancelBid.php' method='get'><div class='form-group' style='float: right;'><input type='submit' class='form-control' value='Cancel Bidding'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>" . $adminSpecial;
                     } else {
-                        $bidForm = "<form class='form-inline' action='bid.php' method='get'><div class='form-group' style='float: right;'><input type='submit' class='form-control' value='Bid'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>";
+                        $bidForm = "<form class='form-inline' action='bid.php' method='get'><div class='form-group' style='float: right;'><input type='submit' class='form-control' value='Bid'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>" . $adminSpecial;
                     }
                 }
             } else {
