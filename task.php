@@ -14,6 +14,7 @@ if (isset($_SESSION["user_id"])) {
 	<title>Tasource - Making task sourcing simple</title>
     <link rel="stylesheet" type="text/css" href="../TaskSourcing/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../TaskSourcing/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../TaskSourcing/css/new-task-styling.css">
     <link rel="stylesheet" type="text/css" href="../TaskSourcing/css/login-styling.css">
 
     <script src="../TaskSourcing/js/jquery-3.2.0.min.js"></script>
@@ -22,63 +23,42 @@ if (isset($_SESSION["user_id"])) {
 <body>
 	<!-- include php -->
     <?php include "config/db-connection.php"; ?>
-
-    <!-- navigation bar -->
-    <nav class="navbar navbar-inverse navigation-bar navbar-fixed-top">
-        <div class="container navbar-container">
-            <div class="navbar-header pull-left"><a class="navbar-brand" href="">Tasource</a></div>
-            <div class="nav navbar-nav navbar-form">
-                <div class="input-icon">
-                    <i class="glyphicon glyphicon-search search"></i>
-                    <input type="text" placeholder="Type to search..." class="form-control search-form" tabindex="1">
-                </div>
-            </div>
-            <div class="collapse navbar-collapse pull-right">
-                <ul class="nav navbar-nav">
-                    <li><a href="">View task</a></li>
-                    <li><a href="">Post task</a></li>
-                    <li><a href="">Profile</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
     <?php
-    	if (isset($_GET["task_id"])) {
-    		$task_id = $_GET["task_id"];
-    		$query = "SELECT * FROM tasks t WHERE t.id = " . $task_id . ";";
-    		$result = pg_query($query) or die('Query failed: ' . pg_last_error());
+        if (isset($_GET["task_id"])) {
+            $task_id = $_GET["task_id"];
+            $query = "SELECT * FROM tasks t WHERE t.id = " . $task_id . ";";
+            $result = pg_query($query) or die('Query failed: ' . pg_last_error());
             $row = pg_fetch_row($result);
             if ($row) {
-            	$owner_id = $row[1];
-            	$title = $row[2];
-            	$desc = nl2br($row[3]);
-				$post_time = (new DateTime($row[4]))->format('Y-m-d H:i:s');
-				$start_time = (new DateTime($row[5]))->format('Y-m-d H:i:s');
-				$end_time = (new DateTime($row[6]))->format('Y-m-d H:i:s');
-				$category = pg_fetch_row(pg_query("SELECT name FROM categories WHERE id = " . $row[8] . ";"))[0];
-				$region = pg_fetch_row(pg_query("SELECT name FROM regions WHERE id = " . $row[9] . ";"))[0];
-				$salary = $row[10];
+                $owner_id = $row[1];
+                $title = $row[2];
+                $desc = nl2br($row[3]);
+                $post_time = (new DateTime($row[4]))->format('Y-m-d H:i:s');
+                $start_time = (new DateTime($row[5]))->format('Y-m-d H:i:s');
+                $end_time = (new DateTime($row[6]))->format('Y-m-d H:i:s');
+                $category = pg_fetch_row(pg_query("SELECT name FROM categories WHERE id = " . $row[8] . ";"))[0];
+                $region = pg_fetch_row(pg_query("SELECT name FROM regions WHERE id = " . $row[9] . ";"))[0];
+                $salary = $row[10];
 
-				$bidForm = "";
-            	if ($owner_id == $user_id) {
-            		$bidForm = "<form class='form-inline' action='edit-task.php' method='get'><div class='form-group' style='float: right;'><input type='submit' class='form-control' value='Edit'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>";
-            	} else {
-            		$biddingCheckQuery = "SELECT * FROM biddings b WHERE b.bidder = " . $user_id . " AND b.task = "  . $task_id . ";";
-            		$biddingCheckResult = pg_query($biddingCheckQuery) or die('Query failed: ' . pg_last_error());
-            		if (pg_fetch_row($biddingCheckResult)) {
-            			$bidForm = "<form class='form-inline' action='cancelBid.php' method='get'><div class='form-group' style='float: right;'><input type='submit' class='form-control' value='Cancel Bidding'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>";
-            		} else {
-            			$bidForm = "<form class='form-inline' action='bid.php' method='get'><div class='form-group' style='float: right;'><input type='submit' class='form-control' value='Bid'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>";
-            		}
-            	}
+                $bidForm = "";
+                if ($owner_id == $user_id) {
+                    $bidForm = "<form class='form-inline' action='edit-task.php' method='get'><div class='form-group' style='float: right;'><input type='submit' class='form-control' value='Edit'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>";
+                } else {
+                    $biddingCheckQuery = "SELECT * FROM biddings b WHERE b.bidder = " . $user_id . " AND b.task = "  . $task_id . ";";
+                    $biddingCheckResult = pg_query($biddingCheckQuery) or die('Query failed: ' . pg_last_error());
+                    if (pg_fetch_row($biddingCheckResult)) {
+                        $bidForm = "<form class='form-inline' action='cancelBid.php' method='get'><div class='form-group' style='float: right;'><input type='submit' class='form-control' value='Cancel Bidding'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>";
+                    } else {
+                        $bidForm = "<form class='form-inline' action='bid.php' method='get'><div class='form-group' style='float: right;'><input type='submit' class='form-control' value='Bid'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>";
+                    }
+                }
             } else {
                 echo "Error in fetching task";
             }
             pg_free_result($result);
-    	} else {
-    		header("Location: tasklist.php");
-    	}
+        } else {
+            header("Location: tasklist.php");
+        }
     ?>
 
     <?php
@@ -126,6 +106,28 @@ if (isset($_SESSION["user_id"])) {
 
     ?>
 
+
+
+    <!-- navigation bar -->
+    <nav class="navbar navbar-inverse navigation-bar navbar-fixed-top">
+        <div class="container navbar-container">
+            <div class="navbar-header pull-left"><a class="navbar-brand" href="">Tasource</a></div>
+            <div class="nav navbar-nav navbar-form">
+                <div class="input-icon">
+                    <i class="glyphicon glyphicon-search search"></i>
+                    <input type="text" placeholder="Type to search..." class="form-control search-form" tabindex="1">
+                </div>
+            </div>
+            <div class="collapse navbar-collapse pull-right">
+                <ul class="nav navbar-nav">
+                    <li><a href="">View task</a></li>
+                    <li><a href="">Post task</a></li>
+                    <li><a href="">Profile</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <!-- content -->
     <div class="content-container container">
 
@@ -133,44 +135,52 @@ if (isset($_SESSION["user_id"])) {
         <div class="page-heading">
             <ol class="breadcrumb">
                 <li><a href="tasklist.php">Home</a></li>
-                <li>Task detail</li>
+                <li>View task</li>
             </ol>
-            <h1>Task Detail</h1>
+            <h1>View Tasks</h1>
         </div>
 
-        <br>
-    	<div class="container">
-    		<div class="panel panel-info">
-    			<div class="panel-heading"><h3><?php echo $title;?></h3></div>
-    			<div class="panel-body">
-    				<h4>Description: </h4><br>
-    				<p><?php echo $desc;?></p><br>
-    				<h5>Category:</h5>
-    				<p><?php echo $category;?></p>
-    				<h5>Region:</h5>
-    				<p><?php echo $region;?></p>
-    				<h5>Start Time:</h5>
-    				<p><?php echo $start_time;?></p>
-    				<h5>End Time:</h5>
-    				<p><?php echo $end_time;?></p>
-    				<h5>Salary:</h5>
-    				<p><?php echo $salary;?></p>
-    			</div>
+        <div class="container-fluid">
+
+            <!-- panel -->
+            <div class="panel new-task-panel">
+                <!-- panel heading -->
+                <div class="panel-heading">
+                    <h2 class="new-task-form-title"><?php echo $title;?></h2>
+                </div>
+
+                <!-- panel body -->
+                <div class="panel-body">
+
+                    <div class="row"><h4>Description:</h4></div>
+                    <div class="row"><p><?php echo $desc;?></p></div>
+                    <div class="row"><h5>Category:</h5></div>
+                    <div class="row"><p><?php echo $category;?></p></div>
+                    <div class="row"><h5>Region:</h5></div>
+                    <div class="row"><p><?php echo $region;?></p></div>
+                    <div class="row"><h5>Start Time:</h5></div>
+                    <div class="row"><p><?php echo $start_time;?></p></div>
+                    <div class="row"><h5>End Time:</h5></div>
+                    <div class="row"><p><?php echo $end_time;?></p></div>
+                    <div class="row"><h5>Salary:</h5></div>
+                    <div class="row"><p><?php echo $salary;?></p></div>
+                </div>
                 <div class="panel-body">
                     <h4>Bidders: </h4>
                     <p><?php echo $payment; ?></p>
                     <p><?php echo $bidders;?></p>
                 </div>
-    			<div class="panel-footer">
-    				<div class="row">
-    		            <div class="col-md-6"><strong>Posted on </strong><?php echo $post_time;?></div>
-    		            <div class="col-md-6">
-    		            	<?php echo $bidForm; ?>
-    	            	</div>
-    		        </div>
-    			</div>
-    		</div>
-    	</div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-6"><strong>Posted on </strong><?php echo $post_time;?></div>
+                        <div class="col-md-6">
+                            <?php echo $bidForm; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </body>
 </html>
