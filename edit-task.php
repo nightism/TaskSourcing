@@ -198,7 +198,7 @@ if (isset($_SESSION["user_id"])) {
                                 <div class="col-sm-6 col-sm-offset-3">
                                     <div class="btn-toolbar">
                                         <button type="submit" name="edit" class="btn-primary btn">Edit</button>
-                                        <button class="btn-default btn">Cancel</button>
+                                        <button class="btn-default btn" onclick="window.location.href='tasklist.php'">Cancel</button>
                                     </div>
                                 </div>
                             </div>
@@ -206,25 +206,26 @@ if (isset($_SESSION["user_id"])) {
                     </div>
 
                 </form>
-                <?php if(isset($_GET['edit'])) {
-                    $title = $_GET['title'];
-                    $category = $_GET['category'];
-                    $region = $_GET['region'];
-                    $description = $_GET['description'];
-                    $salary = $_GET['salary'];
-                    $start_time = $_GET['start_time'];
-                    $end_time = $_GET['end_time'];
-                    $task_id = $_GET['t_id'];
+                <?php 
+                    if(isset($_GET['edit'])) {
+                        $title = $_GET['title'];
+                        $category = $_GET['category'];
+                        $region = $_GET['region'];
+                        $description = $_GET['description'];
+                        $salary = $_GET['salary'];
+                        $start_time = $_GET['start_time'];
+                        $end_time = $_GET['end_time'];
+                        $task_id = $_GET['t_id'];
 
-                    $query = "UPDATE tasks
-                              SET title='" . $title . "', category=" . $category . ", region=" . $region . ",  description='" . $description . 
-                              "', salary=" . $salary . ", start_time='" . $start_time . "', end_time='". $end_time . "' WHERE id= ". $task_id . ";";
-                    $result = pg_query($query) or die('Query failed: ' . pg_last_error());
-                    pg_free_result($result);
-                    header("Location: tasklist.php");
-                    echo "<script>window.location = '/TaskSourcing/tasklist.php';</script>";
-                    exit();
-                }
+                        $query = "UPDATE tasks
+                                  SET title='" . $title . "', category=" . $category . ", region=" . $region . ",  description='" . $description . 
+                                  "', salary=" . $salary . ", start_time='" . $start_time . "', end_time='". $end_time . "' WHERE id= ". $task_id . ";";
+                        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+                        pg_free_result($result);
+                        header("Location: tasklist.php");
+                        echo "<script>window.location = '/TaskSourcing/tasklist.php';</script>";
+                        exit();
+                    }
                 ?>
             </div>
         </div>
