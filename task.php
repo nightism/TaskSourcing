@@ -64,11 +64,15 @@ if (isset($_SESSION["user_id"])) {
     <?php
         if (isset($_GET["task_id"])) {
             $task_id = $_GET["task_id"];
-            $query = "SELECT u.name FROM users u INNER JOIN biddings b on u.id = b.bidder WHERE b.task = " . $task_id . ";";
+            $query = "SELECT u.name, u.id FROM users u INNER JOIN biddings b on u.id = b.bidder WHERE b.task = " . $task_id . ";";
             $result = pg_query($query) or die('Query failed: ' . pg_last_error());
             $bidders = "";
             while ($row = pg_fetch_row($result)) {
-                $bidders = $bidders . "<p>" . $row[0] . "</p>";
+                if ($owner_id == $user_id) {
+                    $bidders = "<p>test0</p>" . $bidders . "<p>" . $row[0] . "</p><form class='form-inline' action='assignTask.php' method='get'><div class='form-group' style='float: left;'><input type='submit' class='form-control' value='Assign'></div><input type='hidden' name='task_id' value='" . $task_id . "'><input type='hidden' name='assignee' value='" . $row[1] . "'></form>";
+                } else {
+                    $bidders = $bidders . "<p>" . $row[0] . "</p>";
+                }
             }
 
         } else {
