@@ -33,24 +33,23 @@ if (isset($_SESSION["user_id"])) {
             	$owner_id = $row[1];
             	$title = $row[2];
             	$desc = nl2br($row[3]);
-				$post_time = $row[4];
-				$start_time = $row[5];
-				$end_time = $row[6];
+				$post_time = (new DateTime($row[4]))->format('Y-m-d H:i:s');
+				$start_time = (new DateTime($row[5]))->format('Y-m-d H:i:s');
+				$end_time = (new DateTime($row[6]))->format('Y-m-d H:i:s');
 				$category = pg_fetch_row(pg_query("SELECT name FROM categories WHERE id = " . $row[8] . ";"))[0];
 				$region = pg_fetch_row(pg_query("SELECT name FROM regions WHERE id = " . $row[9] . ";"))[0];
 				$salary = $row[10];
 
 				$bidForm = "";
             	if ($owner_id == $user_id) {
-            		// User's own task
-            		echo "My Task";
+            		$bidForm = "<form class='form-inline' action='editTask.php' method='get'><div class='form-group' style='float: right;'><input type='submit' class='form-control' value='Edit'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>";
             	} else {
             		$biddingCheckQuery = "SELECT * FROM biddings b WHERE b.bidder = " . $user_id . " AND b.task = "  . $task_id . ";";
             		$biddingCheckResult = pg_query($biddingCheckQuery) or die('Query failed: ' . pg_last_error());
             		if (pg_fetch_row($biddingCheckResult)) {
-            			$bidForm = "<form class='form-inline' action='cancelBid.php' method='get'><div class='form-group'><label>Cancel Bidding: </label><input type='submit' class='form-control' value='Cancel'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>";
+            			$bidForm = "<form class='form-inline' action='cancelBid.php' method='get'><div class='form-group' style='float: right;'><input type='submit' class='form-control' value='Cancel Bidding'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>";
             		} else {
-            			$bidForm = "<form class='form-inline' action='bid.php' method='get'><div class='form-group'><label>Bid For This Task: </label><input type='submit' class='form-control' value='Bid'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>";
+            			$bidForm = "<form class='form-inline' action='bid.php' method='get'><div class='form-group' style='float: right;'><input type='submit' class='form-control' value='Bid'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>";
             		}
             	}
             } else {
@@ -79,9 +78,9 @@ if (isset($_SESSION["user_id"])) {
 				<h5>Salary:</h5>
 				<p><?php echo $salary;?></p>
 			</div>
-			<div class="panel-footer panel-info">
+			<div class="panel-footer">
 				<div class="row">
-		            <div class="col-md-6">Posted on <?php echo $post_time;?></div>
+		            <div class="col-md-6"><strong>Posted on </strong><?php echo $post_time;?></div>
 		            <div class="col-md-6">
 		            	<?php echo $bidForm; ?>
 	            	</div>
