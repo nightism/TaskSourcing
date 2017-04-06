@@ -44,6 +44,7 @@ if (isset($_SESSION["is_admin"])) {
                 $category = pg_fetch_row(pg_query("SELECT name FROM categories WHERE id = " . $row[8] . ";"))[0];
                 $region = pg_fetch_row(pg_query("SELECT name FROM regions WHERE id = " . $row[9] . ";"))[0];
                 $salary = $row[10];
+                $total_salary = $row[11];
 
                 $bidForm = "";
                 if ($owner_id == $user_id) {
@@ -175,8 +176,10 @@ if (isset($_SESSION["is_admin"])) {
                     <div class="row"><p><?php echo $start_time;?></p></div>
                     <div class="row"><h5>End Time:</h5></div>
                     <div class="row"><p><?php echo $end_time;?></p></div>
-                    <div class="row"><h5>Salary:</h5></div>
-                    <div class="row"><p><?php echo $salary;?></p></div>
+                    <div class="row"><h5>Salary Per Hour:</h5></div>
+                    <div class="row"><p>$<?php echo $salary;?></p></div>
+                    <div class="row"><h5>Total Salary:</h5></div>
+                    <div class="row"><p>$<?php echo $total_salary;?></p></div>
                 </div>
                 <div class="panel-body">
                     <h4>Bidders: </h4>
