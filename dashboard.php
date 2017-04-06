@@ -111,12 +111,63 @@ if (isset($_SESSION["user_id"])) {
                         
                         pg_free_result($result2);
                     ?>
-                    <!-- <tr>
-                        <td align="left" data-title="Country"><i>World</i></td>
-                        <td data-title="Population (1000s)">6085576</td>
-                        <td data-title="Adults (1000s)">3697511</td>
-                        <td data-title="Share of world population (%)">100.00</td>
-                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-vertical first-table">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="padding-right:100px">User</th>
+                        <th>Average Salary provided</th>
+                        <th>Has posted task of all categories</th>
+                        <th>Total number of tasks posted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                        $name = array();
+                        $hasAll = array();
+                        $total = array();
+                        $averageS = array();
+                        
+                        $query1 = "SELECT u2.id, u2.name, CASE WHEN temp.uid IS NULL THEN 'NO' ELSE 'YES' END FROM users u2 LEFT OUTER JOIN (SELECT u.id AS uid FROM users u WHERE NOT EXISTS (SELECT c.id FROM categories c WHERE c.id NOT IN (SELECT c1.id FROM categories c1 INNER JOIN tasks t1 ON t1.category = c1.id INNER JOIN users u1 ON u1.id = t1.owner WHERE u1.id = u.id))) AS temp ON temp.uid = u2.id";
+                        $result1 = pg_query($query1) or die('Query failed: ' . pg_last_error());
+
+                        while ($row1 = pg_fetch_row($result1)) {
+                            $name[$row1[0]] = $row1[1];
+                            $hasAll[$row1[0]] = $row1[2];
+                        }
+
+                        pg_free_result($result1);
+
+                        $query2 = "SELECT u.id, SUM(CASE WHEN t.id IS NULL THEN 0 ELSE 1 END) FROM users u LEFT OUTER JOIN tasks t ON t.owner = u.id GROUP BY u.id";
+                        $result2 = pg_query($query2) or die('Query failed: ' . pg_last_error());
+
+                        while ($row2 = pg_fetch_row($result2)){
+                            $total[$row2[0]] = $row2[1];
+                        }
+
+                        $query3 = "SELECT u.id, AVG(CASE WHEN t.salary IS NULL THEN -1 ELSE t.salary END) FROM users u LEFT OUTER JOIN tasks t ON t.owner = u.id GROUP BY u.id";
+                        $result3 = pg_query($query3) or die('Query failed: ' . pg_last_error());
+
+                        while ($row3 = pg_fetch_row($result3)) {
+                            $avg = $row3[1] < 0 ? '' : round(floatval($row3[1]), 2);
+                            $averageS[$row3[0]] = $avg;
+                        }
+
+                        foreach ($name as $key => $value) {
+                            echo "<tr>";
+                            echo "<td align='left'><i>" . $name[$key] . "</i></td>";
+                            echo "<td>" . $averageS[$key] . "</td>";
+                            echo "<td>" . $hasAll[$key] . "</td>";
+                            echo "<td>" . $total[$key] . "</td>";
+                            echo "</tr>";
+                        }
+                        
+                        pg_free_result($result2);
+                    ?>
                 </tbody>
             </table>
         </div>
