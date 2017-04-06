@@ -20,11 +20,11 @@
     font-weight: 300;
 }
 
-.email-input-row, .password-input-row {
+.name-input-row, .region-input-row, .card-input-row, .email-input-row, .password-input-row {
     margin-top: 10px;
 }
 
-.password-label h5, .email-label h5 {
+.name-label h5, .region-label h5, .card-input-row, 1password-label h5, .email-label h5 {
     font-weight: 400;
 }
 
