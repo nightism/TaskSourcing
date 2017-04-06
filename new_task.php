@@ -167,7 +167,7 @@ if (isset($_SESSION["user_id"])) {
                                 <div class="col-sm-6 col-sm-offset-3">
                                     <div class="btn-toolbar">
                                         <button type="submit" name="create" class="btn-primary btn">Create</button>
-                                        <button class="btn-default btn">Cancel</button>
+                                        <button type="button" class="btn-default btn">Cancel</button>
                                     </div>
                                 </div>
                             </div>

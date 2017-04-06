@@ -21,7 +21,6 @@ $query = "INSERT INTO payments(task, payer, card) VALUES(" . $task_id . ", " . $
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 pg_free_result($result);
 
-echo $task_id;
 $query = "UPDATE assignments SET is_done = 'TRUE' WHERE task =" . $task_id .";";
 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 pg_free_result($result);
