@@ -63,7 +63,7 @@ session_start();
                         </form>
 
                         <?php if(isset($_GET['login'])) {
-                            $query = "SELECT u.id, u.name
+                            $query = "SELECT u.id, u.name, u.is_admin
                                       FROM users u
                                       WHERE u.email = '".$_GET['email']."'
                                         AND u.password = '".$_GET[password]."';";
@@ -72,6 +72,7 @@ session_start();
                             $row = pg_fetch_row($result);
                             if ($row) {
                                 $_SESSION["user_id"] = $row[0];
+                                $_SESSION["is_admin"] = $row[2];
                                 header("Location: tasklist.php");
                                 exit;
                             } else {
