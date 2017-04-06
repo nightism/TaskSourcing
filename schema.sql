@@ -80,7 +80,7 @@ CREATE TABLE payments (
         ON DELETE CASCADE
 );
 
-ALTER TABLE taks ADD total_salary INTEGER;
+ALTER TABLE tasks ADD total_salary INTEGER;
 
 #Trigger and Functions 
 -- DROP FUNCTION calculateTotalSlaray() CASCADE;
