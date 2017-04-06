@@ -66,19 +66,21 @@ CREATE TABLE assignments (
     id int PRIMARY KEY DEFAULT nextval('assignment_id_seq'),
     task int REFERENCES tasks(id)
         ON DELETE CASCADE NOT NULL,
-    assignee int REFERENCES users(id),
+    assignee int REFERENCES users(id) NOT NULL,
     is_done boolean NOT NULL DEFAULT false,
     UNIQUE (task)
 );
 
 CREATE TABLE payments (
     id int PRIMARY KEY DEFAULT nextval('payment_id_seq'),
-    task int REFERENCES tasks(id),
+    task int REFERENCES tasks(id) ON DELETE CASCADE,
     payer int,
     card varchar(16),
     FOREIGN KEY (payer, card) REFERENCES credit_cards(owner, card_number)
         ON DELETE CASCADE
 );
+
+#Trigger and Functions 
 
 # Default data
 # Regions
