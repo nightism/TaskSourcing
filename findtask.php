@@ -107,7 +107,7 @@ if (isset($_SESSION["user_id"])) {
                                 <div class="form-group row">
                                     <label class="col-sm-3 control-label">Region</label>
                                     <div class="col-sm-6">
-                                        <select name="category" class="form-control">
+                                        <select name="region" class="form-control">
                                             <option value="">Select Region</option>
                                             <?php
                                                 $query = "SELECT r.name FROM regions r ORDER BY r.name";
@@ -173,13 +173,11 @@ if (isset($_SESSION["user_id"])) {
                         </div>
 
                         <div class="panel-footer">
-                            <div class="row">
-                                
-                                    
+                            <div class="row" style = "float: right;">
+                                    <div class="form-group row">
                                         <input type="submit" class="btn-primary btn" name="forFind" value="Find" >
                                         <a href="findtask.php" class="btn-default btn">Cancel</a>
-                                    
-                                
+                                    </div>
                             </div>
                         </div>
 
@@ -196,15 +194,39 @@ if (isset($_SESSION["user_id"])) {
 
                                 $query = "SELECT t.title, t.description, t.start_time, t.end_time, c.name, r.name, t.salary
                                           FROM tasks t INNER JOIN categories c ON t.category = c.id INNER JOIN regions r ON t.region = r.id
-                                          WHERE t.title like '% '". $title ."' %'
-                                          AND c.name = '". $category ."'
-                                          AND r.name = '". $region ."'
-                                          AND t.start_time >= '". $start_time ."'
-                                          AND t.end_time <= '". $end_time ."'
-                                          AND t.salary >= ". $lowerbound ."
-                                          AND t.salary <= ". $upperbound ."
-                                         ";
+                                          WHERE 1 = 1 ";
 
+                                if (trim($title)) {
+                                    $query .= " AND t.title like '%". $title ."%' ";
+                                }
+
+                                if (trim($category)) {
+                                    $query .= " AND c.name = '". $category ."' ";
+                                }
+
+                                if (trim($region)) {
+                                    $query .= " AND r.name = '". $region ."' ";
+                                }
+
+                                if (trim($start_time)) {
+                                    $query .= " AND t.start_time >= timestamp '". $start_time ."' ";
+                                }
+
+                                if (trim($end_time)) {
+                                    $query .= " AND t.end_time <= timestamp '". $end_time ."' ";
+                                }
+
+                                if (trim($lowerbound)) {
+                                    $query .= " AND t.salary >= ". $lowerbound ." ";
+                                }
+
+                                if (trim($upperbound)) {
+                                    $query .= " AND t.salary <= ". $upperbound ." ";
+                                }
+
+                                $query .= " ORDER BY t.title ";
+
+                                // echo $query;
                                 $result = pg_query($query) or die('Query failed: ' . pg_last_error());
                             }
                         ?>
