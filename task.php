@@ -62,8 +62,18 @@ if (isset($_SESSION["user_id"])) {
     ?>
 
     <?php
-        if (isset($_GET["task_id"])) {
-            $task_id = $_GET["task_id"];
+        $query = "SELECT task, assignee FROM assignments WHERE task=" . $task_id . ";";
+        $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+        if ($row = pg_fetch_row($result)) {
+            $bidders = "<p>This task is assigned to: ";
+            $query = "SELECT u.name, u.id FROM users u WHERE u.id = " . $row[1] . ";";
+            pg_free_result($result);
+            $result = pg_query($query) or die('Query failed: ' . pg_last_error());
+            $assignee_info = pg_fetch_row($result);
+            $bidders = $bidders . $assignee_info[0] . "</p>";
+            pg_free_result($result);
+        } else {
+            pg_free_result($result);
             $query = "SELECT u.name, u.id FROM users u INNER JOIN biddings b on u.id = b.bidder WHERE b.task = " . $task_id . ";";
             $result = pg_query($query) or die('Query failed: ' . pg_last_error());
             $bidders = "";
@@ -74,11 +84,8 @@ if (isset($_SESSION["user_id"])) {
                     $bidders = $bidders . "<p>" . $row[0] . "</p>";
                 }
             }
-
-        } else {
-            header("Location: tasklist.php");
+            pg_free_result($result);
         }
-
 
     ?>
     <br>
