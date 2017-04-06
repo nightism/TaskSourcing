@@ -24,9 +24,7 @@ if (isset($_SESSION["user_id"])) {
 </head>
 <body>
     <!-- include php -->
-    <?php 
-    include "config/db-connection.php";
-    ?>
+    <?php include "config/db-connection.php"; ?>
 
     <!-- navigation bar -->
     <nav class="navbar navbar-inverse navigation-bar navbar-fixed-top">
