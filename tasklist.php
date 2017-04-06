@@ -28,9 +28,10 @@ if (isset($_SESSION["user_id"])) {
     	$result = pg_query($query) or die('Query failed: ' . pg_last_error());
     	$table_content = "<table>";
     	while ($row = pg_fetch_row($result)) {
-    		$table_content .= "<tr><td>" . $row[0] . "</td></tr>";
+    		$table_content .= "<tr><td class='taskLink' tid='" . $row[1] . "'>" . $row[0] . "</a></td></tr>";
     	}
-    	echo $table_content . "</table>";
+    	echo $table_content . "<form action='task.php' id='viewTask'><input id='task_id' type='hidden' name='task_id'></form></table>";
     ?>
+    <script type="text/javascript" src="js/tasklist.js"></script>
 </body>
 </html>
