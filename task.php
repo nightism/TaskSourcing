@@ -42,7 +42,7 @@ if (isset($_SESSION["user_id"])) {
 
 				$bidForm = "";
             	if ($owner_id == $user_id) {
-            		$bidForm = "<form class='form-inline' action='editTask.php' method='get'><div class='form-group' style='float: right;'><input type='submit' class='form-control' value='Edit'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>";
+            		$bidForm = "<form class='form-inline' action='edit-task.php' method='get'><div class='form-group' style='float: right;'><input type='submit' class='form-control' value='Edit'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form>";
             	} else {
             		$biddingCheckQuery = "SELECT * FROM biddings b WHERE b.bidder = " . $user_id . " AND b.task = "  . $task_id . ";";
             		$biddingCheckResult = pg_query($biddingCheckQuery) or die('Query failed: ' . pg_last_error());
