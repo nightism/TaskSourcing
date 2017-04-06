@@ -48,10 +48,12 @@ if (isset($_SESSION["user_id"])) {
                 if ($owner_id == $user_id) {
 
                 } else {
-
+                    header("Location: tasklist.php");
+                    exit;
                 }
             } else {
-
+                header("Location: tasklist.php");
+                exit;
             }
             pg_free_result($result);
         }
