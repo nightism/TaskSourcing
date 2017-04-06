@@ -1,7 +1,6 @@
-# Creates database
+
 CREATE DATABASE task_sourcing;
 
-# Creates sequences for id
 CREATE SEQUENCE region_id_seq INCREMENT BY 1 MINVALUE 0 START WITH 0 NO CYCLE;
 CREATE SEQUENCE id_seq INCREMENT BY 1 MINVALUE 0 START WITH 0 NO CYCLE;
 CREATE SEQUENCE task_id_seq INCREMENT BY 1 MINVALUE 0 START WITH 0 NO CYCLE;
@@ -11,7 +10,6 @@ CREATE SEQUENCE assignment_id_seq INCREMENT BY 1 MINVALUE 0 START WITH 0 NO CYCL
 CREATE SEQUENCE payment_id_seq INCREMENT 1 MINVALUE 0 START WITH 0 NO CYCLE;
 
 
-# Create tables
 CREATE TABLE regions (
     id int PRIMARY KEY DEFAULT nextval('region_id_seq'),
     name varchar(255) UNIQUE NOT NULL
@@ -82,7 +80,6 @@ CREATE TABLE payments (
 
 ALTER TABLE tasks ADD total_salary INTEGER;
 
-#Trigger and Functions 
 -- DROP FUNCTION calculateTotalSlaray() CASCADE;
 
 CREATE OR REPLACE FUNCTION calculateTotalSalary(taskNum INTEGER)
@@ -134,29 +131,24 @@ FOR EACH ROW
 EXECUTE PROCEDURE updateTaskTotalSalary();
 
 
-# Default data
-# Regions
 INSERT INTO regions(name) VALUES ('Clementi');
 INSERT INTO regions(name) VALUES ('Tampines');
 INSERT INTO regions(name) VALUES ('Queens Town');
 INSERT INTO regions(name) VALUES ('Holland Village');
 INSERT INTO regions(name) VALUES ('Changi');
 
-# Admins
 INSERT INTO users(name, email, password, is_admin, region) VALUES ('Yang Zhuohan', 'billstark1996@gmail.com', '123456', true, 0);
 INSERT INTO users(name, email, password, is_admin, region) VALUES ('Sun Mingyang', 'sun.mingyang@u.nus.edu', '123456', true, 0);
 INSERT INTO users(name, email, password, is_admin, region) VALUES ('Wu Zefeng', 'flamesdesperado@gmail.com', '123456', true, 0);
 INSERT INTO users(name, email, password, is_admin, region) VALUES ('Li Zihan', 'e0012710@u.nus.edu', '123456', true, 0);
 INSERT INTO users(name, email, password, is_admin, region) VALUES ('Deng Yue', 'dengyue@yyy.com', '123456', true, 0);
 
-# Users
 INSERT INTO users(name, email, password, region) VALUES ('Jiang Haotian', 'e0012663@u.nus.edu', '123456', 0);
 INSERT INTO users(name, email, password, region) VALUES ('Wu Hanqing', 'e0012689@u.nus.edu', '123456', 1);
 INSERT INTO users(name, email, password, region) VALUES ('Chen Ke', 'e0012717@u.nus.edu', '123456', 1);
 INSERT INTO users(name, email, password, region) VALUES ('Luo Yuyang', 'e0012652@u.nus.edu', '123456', 2);
 INSERT INTO users(name, email, password, region) VALUES ('Duan Yichen', 'e0012639@u.nus.edu', '123456', 0);
 
-# Credit cards
 INSERT INTO credit_cards(card_number, owner) VALUES ('1217528338469765', 0);
 INSERT INTO credit_cards(card_number, owner) VALUES ('9907232816517776', 1);
 INSERT INTO credit_cards(card_number, owner) VALUES ('2384753088271560', 2);
@@ -168,7 +160,6 @@ INSERT INTO credit_cards(card_number, owner) VALUES ('4007339852045690', 7);
 INSERT INTO credit_cards(card_number, owner) VALUES ('7930161340703607', 8);
 INSERT INTO credit_cards(card_number, owner) VALUES ('7930161340703607', 9);
 
-# Categories
 INSERT INTO categories(name) VALUES('Dusting');
 INSERT INTO categories(name) VALUES('Sweeping');
 INSERT INTO categories(name) VALUES('Laundry');
@@ -185,8 +176,7 @@ INSERT INTO categories(name) VALUES('Tuor guiding');
 INSERT INTO categories(name) VALUES('Teaching');
 
 
--- # Queries example
-# Post a task
+--
 -- INSERT INTO tasks(owner, title, description, category_id) 
 -- VALUES(0, 'wash 200 dishes', 
 --     'wash 200 dishes in my house.', 4);
@@ -195,20 +185,20 @@ INSERT INTO categories(name) VALUES('Teaching');
 --     'Give For Free is an website that sells pre-loved goods. Currently we have already got 600+ users and need an iOS version.', 
 --     '2017-5-1', '2017-7-31', 1);
 
--- # List all tasks
+--
 -- SELECT u.name, task.name, task.post_time, c.name
 --     FROM users u
 --     INNER JOIN tasks task ON u.id = task.owner
 --     INNER JOIN categories c ON task.category = c.category
 
--- # List all tasks except for some people's task
+--
 -- SELECT u.name, task.name, c.name
 --     FROM users u
 --     INNER JOIN tasks task ON u.id = task.owner
 --     INNER JOIN categories c ON task.category = c.category
 --     WHERE u.id <> 0;
 
--- # List all tasks from a specific user
+--
 -- SELECT task.name, c.name, task.post_time
 --     FROM users u
 --     INNER JOIN tasks task ON u.id = task.owner
