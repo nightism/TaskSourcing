@@ -100,6 +100,9 @@ session_start();
                             <div class="col-lg-6 col-md-6 col-xs-12">
                                 <button type="submit" name="signup" class="btn btn-large btn-success login-button">Sign up</button>
                             </div>
+                            <div class="col-lg-6 col-md-6 col-xs-12">
+                                <button type="button" class="btn btn-large btn-primary login-button" onclick="window.location='login.php'">Login</button>
+                            </div>
                         </div>
                     </form>
 
@@ -108,7 +111,7 @@ session_start();
                         $email = pg_escape_string($_POST['email']); 
                         $password = pg_escape_string($_POST['password']); 
                         $region = pg_escape_string($_POST['region']); 
-                        $card = pg_escape_string($_POST['card']); 
+                        $card = pg_escape_string($_POST['card']);
 
                         $query = "INSERT INTO users (name, email, password, is_admin, region) VALUES ('" . $name . "', '" . $email . "', '" . $password . "', '0',  (SELECT r.id FROM regions r WHERE r.name = '" . $region . "'));";
                         $query .= "INSERT INTO credit_cards (card_number, owner) 

@@ -59,6 +59,9 @@ session_start();
                                 <div class="col-lg-6 col-md-6 col-xs-12">
                                     <button type="submit" name="login" class="btn btn-large btn-success login-button">Sign in</button>
                                 </div>
+                                <div class="col-lg-6 col-md-6 col-xs-12">
+                                    <button type="button" class="btn btn-large btn-primary login-button" onclick="window.location='register.php'">Sign Up</button>
+                                </div>
                             </div>
                         </form>
 
