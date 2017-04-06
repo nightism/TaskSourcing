@@ -66,7 +66,7 @@ CREATE TABLE assignments (
     id int PRIMARY KEY DEFAULT nextval('assignment_id_seq'),
     task int REFERENCES tasks(id)
         ON DELETE CASCADE NOT NULL,
-    assignee int REFERENCES users(id),
+    assignee int REFERENCES users(id) NOT NULL,
     is_done boolean NOT NULL DEFAULT false,
     UNIQUE (task)
 );
