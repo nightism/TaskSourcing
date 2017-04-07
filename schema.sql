@@ -1,5 +1,4 @@
-
-CREATE DATABASE task_sourcing;
+CREATE DATABASE IF NOT EXISTS task_sourcing;
 
 CREATE SEQUENCE region_id_seq INCREMENT BY 1 MINVALUE 0 START WITH 0 NO CYCLE;
 CREATE SEQUENCE id_seq INCREMENT BY 1 MINVALUE 0 START WITH 0 NO CYCLE;
@@ -79,8 +78,6 @@ CREATE TABLE payments (
 );
 
 ALTER TABLE tasks ADD total_salary INTEGER;
-
--- DROP FUNCTION calculateTotalSlaray() CASCADE;
 
 CREATE OR REPLACE FUNCTION calculateTotalSalary(taskNum INTEGER)
 RETURNS INTEGER AS $$
@@ -174,33 +171,3 @@ INSERT INTO categories(name) VALUES('Meal preparing');
 INSERT INTO categories(name) VALUES('Translating');
 INSERT INTO categories(name) VALUES('Tuor guiding');
 INSERT INTO categories(name) VALUES('Teaching');
-
-
---
--- INSERT INTO tasks(owner, title, description, category_id) 
--- VALUES(0, 'wash 200 dishes', 
---     'wash 200 dishes in my house.', 4);
--- INSERT INTO tasks(owner, title, description, start_time, end_time, category_id)
--- VALUES(0, 'iOS development for Give For Free',
---     'Give For Free is an website that sells pre-loved goods. Currently we have already got 600+ users and need an iOS version.', 
---     '2017-5-1', '2017-7-31', 1);
-
---
--- SELECT u.name, task.name, task.post_time, c.name
---     FROM users u
---     INNER JOIN tasks task ON u.id = task.owner
---     INNER JOIN categories c ON task.category = c.category
-
---
--- SELECT u.name, task.name, c.name
---     FROM users u
---     INNER JOIN tasks task ON u.id = task.owner
---     INNER JOIN categories c ON task.category = c.category
---     WHERE u.id <> 0;
-
---
--- SELECT task.name, c.name, task.post_time
---     FROM users u
---     INNER JOIN tasks task ON u.id = task.owner
---     INNER JOIN categories c ON task.category = c.category
---     WHERE u.id = 0;
