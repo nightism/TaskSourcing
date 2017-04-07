@@ -87,8 +87,8 @@ if (isset($_SESSION["is_admin"])) {
                     pg_free_result($result);
 
                 } else {
-                    $payment = "The payment haven't been made<br>";
-                    $payment .= "<form class='form-inline' action='make_payment.php' method='get'><div class='form-group' style='float: left;'><input type='submit' class='form-control' value='Task is finished and Make Payment'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form><br><br>";
+                    $payment = "<tr><td>The payment haven't been made<td>";
+                    $payment .= "<td><form class='form-inline' action='make_payment.php' method='get'><div class='form-group' style='margin: 0'><input type='submit' class='form-control' value='Task is finished and Make Payment'></div><input type='hidden' name='task_id' value='" . $task_id . "'></form></td></tr>";
                 }
             }
             
@@ -106,9 +106,9 @@ if (isset($_SESSION["is_admin"])) {
             $bidders = "";
             while ($row = pg_fetch_row($result)) {
                 if ($owner_id == $user_id) {
-                    $bidders .=  $row[0] . "<br><form class='form-inline' action='assignTask.php' method='get'><div class='form-group' style='float: left;'><input type='submit' class='form-control' value='Assign'></div><input type='hidden' name='task_id' value='" . $task_id . "'><input type='hidden' name='assignee' value='" . $row[1] . "'></form>";
+                    $bidders .=  "<tr><td>" . $row[0] . "</td><td><form class='form-inline' action='assignTask.php' method='get'><div class='form-group' style='margin: 0'><input type='submit' class='form-control' value='Assign'></div><input type='hidden' name='task_id' value='" . $task_id . "'><input type='hidden' name='assignee' value='" . $row[1] . "'></form></td></tr>";
                 } else {
-                    $bidders = $bidders . "<p>" . $row[0] . "</p>";
+                    $bidders .= "<tr><td>" . $row[0] . "</td></tr>";
                 }
             }
             pg_free_result($result);
@@ -183,8 +183,8 @@ if (isset($_SESSION["is_admin"])) {
                 </div>
                 <div class="panel-body">
                     <h4>Bidders: </h4>
-                    <p><?php echo $payment; ?></p>
-                    <p><?php echo $bidders;?></p>
+                    <table><tbody><?php echo $payment;?></tbody></table>
+                    <table><tbody><?php echo $bidders;?></tbody></table>
                 </div>
                 <div class="panel-footer">
                     <div class="row">
