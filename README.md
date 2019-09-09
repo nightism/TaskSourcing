@@ -1,5 +1,4 @@
 # TaskSourcing
-CS2102 Project
 
 ### Resetting Data:
 >Go to reset page and click reset data.
